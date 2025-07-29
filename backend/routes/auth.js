@@ -1,9 +1,16 @@
 const express = require('express');
+
+const JWT_SECRET = process.env.JWT_SECRET;
+
+
+
+console.log('📍 Auth router loaded');
+
+
 const jwt = require('jsonwebtoken');
 const { z } = require('zod');
 const { User } = require('../db');
 
-const JWT_SECRET =  "your-jwt-secret";
 
 
 const router = express.Router();
@@ -20,7 +27,9 @@ const signinSchema = z.object({
   password: z.string()
 });
 
-// POST /auth/signup
+
+
+
 router.post('/signup', async (req, res) => {
   try {
     const data = signupSchema.parse(req.body);
@@ -31,6 +40,9 @@ router.post('/signup', async (req, res) => {
     }
 
     const user = await User.create(data);
+  
+
+
     const token = jwt.sign({userId: user._id, role: user.role }, JWT_SECRET);
     res.json({ token, username: user.username });
   } catch (err) {
@@ -38,7 +50,7 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-// POST /auth/signin
+
 router.post('/signin', async (req, res) => {
   try {
     const data = signinSchema.parse(req.body);

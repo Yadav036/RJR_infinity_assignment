@@ -1,5 +1,10 @@
+const path = require("path");
+require('dotenv').config({ path: path.resolve(__dirname, '.env') }); // ✅ must be first!
 const express = require('express');
 const rootRouter = require('./routes/index'); 
+
+
+
 
 const app = express();
 

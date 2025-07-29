@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb+srv://gokulyadav:fIqcyJKi99bExcWw@cluster0.zv4aswl.mongodb.net/ca_proj")
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.error("Connection error:", err));
 
 
 // User Schema
